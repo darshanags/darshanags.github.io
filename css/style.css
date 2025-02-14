@@ -1,0 +1,22 @@
+body {
+    background: #121212;
+    color: #fff;
+}
+
+#content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.mission {
+
+    display: flex;
+    flex: 0 1 calc(50% - .5em);
+    margin-bottom: 1em;
+    background: #282828;
+    border-radius: 5px;
+}
+.container {
+    padding: 2px 16px;
+}
