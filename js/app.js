@@ -1,6 +1,20 @@
 const url = "https://api.warframestat.us/pc/"
+let cacheControl = "force-cache"
+let nearest = localStorage.getItem("nearest")
 
-fetch(url)
+if(nearest == null){
+    cacheControl = "reload"
+}else{
+    let nearestTs = parseInt(nearest)
+    let now = Date.now()
+
+    if(now >= nearestTs){
+        cacheControl = "reload"
+    }
+}
+
+
+fetch(url, { cache: cacheControl })
     .then((response) => {
         return response.json();
     })
@@ -8,10 +22,20 @@ fetch(url)
         let alerts = data.alerts;
         let container = document.getElementById("content")
         let missionsHTML = ``
+        let now = Date.now()
+        let prevTs = 0
 
         alerts.forEach(alert => {
             if (alert.tag == undefined || alert.tag != "JadeShadows") {
                 return
+            }
+
+            let expiry = new Date(alert.expiry).valueOf()
+
+            if (prevTs == 0 || prevTs > expiry){
+                prevTs = expiry
+            }else{
+                prevTs = prevTs
             }
 
             let mission = {
@@ -36,6 +60,8 @@ fetch(url)
             missionsHTML += missionBox
 
         });
+
+        localStorage.setItem("nearest", prevTs.toString())
 
         container.innerHTML = missionsHTML
 
