@@ -2,13 +2,13 @@ const url = "https://api.warframestat.us/pc/"
 let cacheControl = "force-cache"
 let nearest = localStorage.getItem("nearest")
 
-if(nearest == null){
+if (nearest == null) {
     cacheControl = "reload"
-}else{
+} else {
     let nearestTs = parseInt(nearest)
     let now = Date.now()
 
-    if(now >= nearestTs){
+    if (now >= nearestTs) {
         cacheControl = "reload"
     }
 }
@@ -32,9 +32,9 @@ fetch(url, { cache: cacheControl })
 
             let expiry = new Date(alert.expiry).valueOf()
 
-            if (prevTs == 0 || prevTs > expiry){
+            if (prevTs == 0 || prevTs > expiry) {
                 prevTs = expiry
-            }else{
+            } else {
                 prevTs = prevTs
             }
 
@@ -68,15 +68,39 @@ fetch(url, { cache: cacheControl })
         document.querySelectorAll(".mission").forEach(mission => {
             let start = mission.dataset.start
             let end = mission.dataset.end
+            let endTime = new Date(end)
 
-            countdown(
-                new Date(end),
-                function(ts) {
-                    mission.querySelector(".countdown").innerHTML = ts.toHTML();
+            simplyCountdown(mission.querySelector(".countdown"), {
+                year: endTime.getFullYear(),
+                month: endTime.getMonth() + 1,
+                day: endTime.getDate(),
+                hours: endTime.getHours(),
+                minutes: endTime.getMinutes(),
+                seconds: endTime.getSeconds(),
+                inline: true,
+                removeZeroUnits: true,
+                zeroPad: false,
+                inlineSeparator: ' ',
+                words: {
+                    days: { root: 'd', lambda: (root, n) => n > 1 ? root + '' : root },
+                    hours: { root: 'h', lambda: (root, n) => n > 1 ? root + '' : root },
+                    minutes: { root: 'm', lambda: (root, n) => n > 1 ? root + '' : root },
+                    seconds: { root: 's', lambda: (root, n) => n > 1 ? root + '' : root }
                 },
-                countdown.HOURS|countdown.MINUTES|countdown.SECONDS);
+                onEnd: () => {
+                    mission.remove()
+                }
+            });
 
-          
+            // countdown(
+            //     new Date(end),
+            //     function(ts) {
+            //         mission.querySelector(".countdown").innerHTML = ts.toHTML();
+            //     },
+            //     countdown.HOURS|countdown.MINUTES|countdown.SECONDS);
+
+
+
 
         })
     })
