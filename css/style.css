@@ -21,3 +21,15 @@ body {
 .container {
     padding: 2px 16px;
 }
+    .mission .countdown{
+        font-weight: bold;
+        color:indianred;
+    }
+
+    .mission:nth-child(2) .countdown{
+        color:cornflowerblue;
+    }
+
+    .mission:nth-child(3) .countdown{
+        color:lightgreen;
+    }

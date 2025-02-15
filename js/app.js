@@ -53,7 +53,7 @@ fetch(url, { cache: cacheControl })
                     <h4>${mission.enemy} - ${mission.type}</h4>
                     <p>${mission.location}</p>
                     <p>${mission.reward}</p>
-                    <p>Time left: <span class="countdown"></span></p>
+                    <p><span class="countdown"></span></p>
                 </div>
             </div> 
             `
@@ -90,18 +90,7 @@ fetch(url, { cache: cacheControl })
                 onEnd: () => {
                     mission.remove()
                 }
-            });
-
-            // countdown(
-            //     new Date(end),
-            //     function(ts) {
-            //         mission.querySelector(".countdown").innerHTML = ts.toHTML();
-            //     },
-            //     countdown.HOURS|countdown.MINUTES|countdown.SECONDS);
-
-
-
-
+            })
         })
     })
     .catch(function (error) {
