@@ -53,7 +53,7 @@ fetch(url, { cache: cacheControl })
                     <h4>${mission.enemy} - ${mission.type}</h4>
                     <p>${mission.location}</p>
                     <p>${mission.reward}</p>
-                    <p><span class="countdown"></span></p>
+                    <p class="countdown-container"><span class="countdown"></span></p>
                 </div>
             </div> 
             `
